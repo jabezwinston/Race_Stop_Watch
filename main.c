@@ -5,7 +5,7 @@
 	
 */
 	
-//Uses six 7-segment displays in multiplexed form,uses timer1 interrupt to refresh them 
+//Uses six 7-segment displays in multiplexed form;uses timer1 interrupt to refresh them 
 #include<reg52.h>
 
 void Timer_Init();
@@ -15,7 +15,7 @@ void display(unsigned long int,bit);	//Display time at 'Current Lap' / 'Prev. La
 void delay_small();
 
 unsigned long int t=0,t2=0;
-bit full=0;
+bit full=0;			//bit datatype is a C51 extexsion to standard C
 unsigned char sw;
 char seven_seg_code[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
 					    //Equivalent values for 0, 1, 2, 3, 4, 5, 6, 8, 9 in 7 segment display
@@ -38,10 +38,10 @@ void timer_100ms() interrupt 1        //Invoked every 50 ms
 void Timer_Init()
 {
 	TMOD=0x11;		//Timer0 in mode 1 and Timer1 in mode 1 
-	
-	TH0=0x4B;
+//TH0 and TL0 values calculated for 20 MHz	
+	TH0=0x4B;		
 	TL0=0xFE;
-	
+//TH1 and TL1 values were calculated by trial and error method to get optimal refresh rate	
 	TH1=0xDC;
 	TL1=0x00;
 	TR1=1;			//Start Timer1

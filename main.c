@@ -15,7 +15,7 @@ void display(unsigned long int,bit);	//Display time at 'Current Lap' / 'Prev. La
 void delay_small();
 
 unsigned long int t=0,t2=0;
-bit full=0;			//bit datatype is a C51 extexsion to standard C
+bit full=0;			//bit datatype is a C51 extexsion for standard C
 unsigned char sw;
 char seven_seg_code[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
 					    //Equivalent values for 0, 1, 2, 3, 4, 5, 6, 8, 9 in 7 segment display
@@ -24,7 +24,7 @@ void main()
 {
 	Timer_Init();
 	Interrupts_Configure();
-	while(1);						//Wait indefinitely for any interrupt to occur
+	while(1);						//Wait indefinitely for an interrupt to occur
 }
 
 
@@ -88,7 +88,7 @@ void Refresh() interrupt 3		//Timer1 Interrupt
 	if(!s)
 	for(j=0;t_copy!=0;j++)
 	{
-	n=t_copy%10;									//Break a number to individual  digits
+	n=t_copy%10;									//Break the number to individual  digits
 	P2=(1<<j);										//Switch from one 7 seg display to other
 		
 		if(j==1)
@@ -97,14 +97,14 @@ void Refresh() interrupt 3		//Timer1 Interrupt
 			P1=~seven_seg_code[n];					
 		
 	delay_small();
-	t_copy=t_copy/10;								//Break a number to individual  digits
+	t_copy=t_copy/10;								//Break the number to individual  digits
 	}
 	
 	else
 		
 	for(j=3;t_copy!=0;j++)
 	{
-	n=t_copy%10;									//Break a number to individual  digits
+	n=t_copy%10;									//Break the number to individual  digits
 	P2=(1<<j);										//Switch from one 7 seg display to other
 		
 		if(j==4)
@@ -113,7 +113,7 @@ void Refresh() interrupt 3		//Timer1 Interrupt
 			P1=~seven_seg_code[n];
 		
 	delay_small();
-	t_copy=t_copy/10;								//Break a number to individual  digits
+	t_copy=t_copy/10;								//Break the number to individual  digits
 	}
 
 	

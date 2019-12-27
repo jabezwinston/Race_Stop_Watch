@@ -6,12 +6,24 @@
 */
 	
 //Uses six 7-segment displays in multiplexed form;uses timer1 interrupt to refresh them 
+#if defined(__C51__)
 #include<reg52.h>
+#elif defined(SDCC)
+#include<8052.h>
+typedef __bit bit;
+/*Alert : This is an ugly hack ! This can backfire :-D */ 
+#define interrupt __interrupt
+#else
+#error "Unsupported compiler !"
+#endif
 
 void Timer_Init();
-void timer_100ms();
+#if defined(SDCC)
+void timer_100ms() interrupt 1;
+#endif
+
 void Interrupts_Configure();
-void display(unsigned long int,bit);	//Display time at 'Current Lap' / 'Prev. Lap'  of 7-segment display
+void display(unsigned int,bit);	//Display time at 'Current Lap' / 'Prev. Lap'  of 7-segment display
 void delay_small();
 
 unsigned long int t=0,t2=0;
@@ -30,7 +42,7 @@ void main()
 
 void timer_100ms() interrupt 1        //Invoked every 50 ms
 {
-	full=~full;
+	full=!full;
 	if(full)
 		t++;				//Incremented by 1 every 100ms
 }
@@ -60,7 +72,7 @@ void Interrupts_Configure()
 
 void Timer_Start_Stop() interrupt 0    //External interrupt 0 (P3.2)
 {
-	TR0=~TR0;		//Start Timer if Stopped , Stop Timer if running when START button is pushed
+	TR0=!TR0;		//Start Timer if Stopped , Stop Timer if running when START button is pushed
 }
 
 void Timer_Lap() interrupt 2	//External interrupt 0 (P3.3)

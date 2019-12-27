@@ -1,0 +1,12 @@
+Listings/
+Objects/
+build/
+*.hex
+*.ihx
+*.bin
+*.rel
+*.lst
+*.map
+*.uvgui.*
+*.uvopt
+*.pdsprj.*.workspace
